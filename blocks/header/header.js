@@ -4,6 +4,17 @@ import { loadFragment } from '../fragment/fragment.js';
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
+// Brand logo mark (inline SVG, matches source). Uses currentColor.
+/* eslint-disable quotes */
+const LOGO_ICON = `<svg viewBox="0 0 33 33" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M28,0H5C2.24,0,0,2.24,0,5v23c0,2.76,2.24,5,5,5h23c2.76,0,5-2.24,5-5V5c0-2.76-2.24-5-5-5ZM29,17c-6.63,0-12,5.37-12,12h-1c0-6.63-5.37-12-12-12v-1c6.63,0,12-5.37,12-12h1c0,6.63,5.37,12,12,12v1Z" fill="currentColor"></path></svg>`;
+
+// Caret chevron (inline SVG) appended to nav items that open a dropdown.
+const CARET_ICON = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
+
+// Small circular icon used on megamenu link cards (inline SVG, matches source).
+const CARD_ICON = `<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 4a12 12 0 1 0 12 12A12 12 0 0 0 16 4Zm0 22a10 10 0 1 1 10-10 10 10 0 0 1-10 10Z"></path><path d="M16 10a6 6 0 1 0 6 6 6 6 0 0 0-6-6Zm0 10a4 4 0 1 1 4-4 4 4 0 0 1-4 4Z"></path></svg>`;
+/* eslint-enable quotes */
+
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
     const nav = document.getElementById('nav');
@@ -109,6 +120,57 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
+ * Decorate a top-level nav item. Items whose first child is a plain label <p>
+ * followed by a nested <ul> are dropdown/megamenu triggers. A trigger whose
+ * nested columns themselves contain sub-lists is a multi-column megamenu;
+ * otherwise it is a simple dropdown. Content is read from the fragment DOM —
+ * no copy is hardcoded here.
+ * @param {Element} li nav section list item
+ */
+function decorateNavItem(li) {
+  const nestedUl = li.querySelector(':scope > ul');
+  if (!nestedUl) return; // plain link item, nothing to do
+
+  li.classList.add('nav-drop');
+
+  // Label is the leading <p>; append a caret so it reads as a dropdown trigger.
+  const label = li.querySelector(':scope > p');
+  if (label && !label.querySelector('.nav-caret')) {
+    const caret = document.createElement('span');
+    caret.className = 'nav-caret';
+    caret.innerHTML = CARET_ICON;
+    label.append(caret);
+  }
+
+  // Multi-column megamenu when any nested column has its own sub-list.
+  const columns = [...nestedUl.querySelectorAll(':scope > li')];
+  const isMega = columns.some((col) => col.querySelector(':scope > ul'));
+  if (!isMega) {
+    li.classList.add('nav-dropdown-simple');
+    return;
+  }
+
+  li.classList.add('nav-megamenu');
+  columns.forEach((col) => {
+    const colList = col.querySelector(':scope > ul');
+    if (colList) {
+      // Regular column: heading <p> + list of icon cards.
+      col.classList.add('nav-megamenu-column');
+      colList.querySelectorAll(':scope > li').forEach((card) => {
+        card.classList.add('nav-megamenu-card');
+        const icon = document.createElement('span');
+        icon.className = 'nav-megamenu-card-icon';
+        icon.innerHTML = CARD_ICON;
+        card.prepend(icon);
+      });
+    } else {
+      // Promotional column (no sub-list): heading link + text + CTA.
+      col.classList.add('nav-megamenu-promo');
+    }
+  });
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -131,16 +193,26 @@ export default async function decorate(block) {
   });
 
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
-  if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
+  if (navBrand) {
+    const brandLink = navBrand.querySelector('.button');
+    if (brandLink) {
+      brandLink.className = '';
+      brandLink.closest('.button-container').className = '';
+    }
+    // Prepend the brand logo mark to the brand link.
+    const link = navBrand.querySelector('a');
+    if (link && !link.querySelector('.nav-logo-icon')) {
+      const icon = document.createElement('span');
+      icon.className = 'nav-logo-icon';
+      icon.innerHTML = LOGO_ICON;
+      link.prepend(icon);
+    }
   }
 
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+      decorateNavItem(navSection);
       navSection.addEventListener('click', () => {
         if (isDesktop.matches) {
           const expanded = navSection.getAttribute('aria-expanded') === 'true';
@@ -149,6 +221,13 @@ export default async function decorate(block) {
         }
       });
     });
+  }
+
+  // Style the tools section CTA as a pill button.
+  const navTools = nav.querySelector('.nav-tools');
+  if (navTools) {
+    const cta = navTools.querySelector('a');
+    if (cta) cta.classList.add('nav-cta');
   }
 
   // hamburger for mobile

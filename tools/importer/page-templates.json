@@ -1,43 +1,210 @@
 {
-  "metadata": {
-    "projectType": "da"
-  },
   "templates": [
     {
       "name": "homepage",
       "urls": [
-        "https://wknd-trendsetters.site/"
+        "https://wknd-trendsetters.site/",
+        "https://wknd-trendsetters.site/fashion-trends-of-the-season",
+        "https://wknd-trendsetters.site/fashion-trends-young-adults"
       ],
       "coverageGaps": [],
-      "description": "WKND Trendsetters fashion blog homepage with hero, featured article, image gallery, testimonials tabs, latest articles cards, FAQ accordion, and CTA banner",
+      "description": "Landing page with intro hero, featured-article columns, image gallery grid, testimonials tabs, latest-articles card grid, FAQ accordion, and full-bleed CTA banner",
       "blocks": [
         {
           "name": "hero-intro",
-          "instances": ["#main-content > header.section.secondary-section"]
+          "instances": [
+            "#main-content > header.section.secondary-section"
+          ]
         },
         {
           "name": "columns-article",
-          "instances": ["#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout"]
+          "instances": [
+            "#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout"
+          ]
         },
         {
           "name": "cards-gallery",
-          "instances": ["#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout.desktop-4-column.grid-gap-sm"]
+          "instances": [
+            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout.desktop-4-column.grid-gap-sm"
+          ]
         },
         {
           "name": "tabs-testimonial",
-          "instances": ["#main-content > section.section:nth-of-type(3) > div.container > div.tabs-wrapper"]
+          "instances": [
+            "#main-content > section.section:nth-of-type(3) > div.container > div.tabs-wrapper"
+          ]
         },
         {
           "name": "cards-article",
-          "instances": ["#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.grid-layout.desktop-4-column.grid-gap-md"]
+          "instances": [
+            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.grid-layout.desktop-4-column.grid-gap-md"
+          ]
         },
         {
           "name": "accordion-faq",
-          "instances": ["#main-content > section.section:nth-of-type(5) > div.container > div.grid-layout > div.faq-list"]
+          "instances": [
+            "#main-content > section.section:nth-of-type(5) > div.container > div.grid-layout > div.faq-list"
+          ]
         },
         {
           "name": "hero-banner",
-          "instances": ["#main-content > section.section.inverse-section"]
+          "instances": [
+            "#main-content > section.section.inverse-section"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Hero intro",
+          "selector": "#main-content > header.section.secondary-section",
+          "style": "light",
+          "blocks": [
+            "hero-intro"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3",
+          "name": "Image gallery",
+          "selector": "#main-content > section.section.secondary-section:nth-of-type(2)",
+          "style": "light",
+          "blocks": [
+            "cards-gallery"
+          ],
+          "defaultContent": [
+            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.utility-text-align-center.utility-margin-bottom-8rem > h2.h2-heading",
+            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.utility-text-align-center.utility-margin-bottom-8rem > p.paragraph-lg"
+          ]
+        },
+        {
+          "id": "section-5",
+          "name": "Latest articles",
+          "selector": "#main-content > section.section.secondary-section:nth-of-type(4)",
+          "style": "light",
+          "blocks": [
+            "cards-article"
+          ],
+          "defaultContent": [
+            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.utility-text-align-center > h2.h2-heading",
+            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.utility-text-align-center > p.paragraph-lg"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "article-listing",
+      "urls": [
+        "https://wknd-trendsetters.site/blog",
+        "https://wknd-trendsetters.site/case-studies",
+        "https://wknd-trendsetters.site/fashion-insights"
+      ],
+      "coverageGaps": [],
+      "description": "Listing page with intro hero, featured-article block, a grid of article cards, and a CTA banner",
+      "blocks": [
+        {
+          "name": "hero-intro",
+          "instances": [
+            "#main-content > header.section.secondary-section"
+          ]
+        },
+        {
+          "name": "columns-article",
+          "instances": [
+            "#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout"
+          ]
+        },
+        {
+          "name": "cards-article",
+          "instances": [
+            "#main-content > section.section.secondary-section#articles > div.container > div.grid-layout.desktop-4-column.grid-gap-md"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Hero intro",
+          "selector": "#main-content > header.section.secondary-section",
+          "style": "light",
+          "blocks": [
+            "hero-intro"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3",
+          "name": "Latest articles",
+          "selector": "#main-content > section.section.secondary-section#articles",
+          "style": "light",
+          "blocks": [
+            "cards-article"
+          ],
+          "defaultContent": [
+            "#main-content > section.section.secondary-section#articles > div.container > div.utility-text-align-center > h2.h2-heading",
+            "#main-content > section.section.secondary-section#articles > div.container > div.utility-text-align-center > p.paragraph-lg"
+          ]
+        },
+        {
+          "id": "section-4",
+          "name": "CTA banner",
+          "selector": "#main-content > section.section.accent-section",
+          "style": "accent",
+          "blocks": [],
+          "defaultContent": [
+            "#main-content > section.section.accent-section > div.container"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "blog-article",
+      "urls": [
+        "https://wknd-trendsetters.site/blog/ace-pro-court-polo",
+        "https://wknd-trendsetters.site/blog/fashion-blog-post",
+        "https://wknd-trendsetters.site/blog/fashion-trends-young-culture",
+        "https://wknd-trendsetters.site/blog/fashion-trends-young-style",
+        "https://wknd-trendsetters.site/blog/flip-flop-summer-style",
+        "https://wknd-trendsetters.site/blog/latest-trends-young-casual-fashion",
+        "https://wknd-trendsetters.site/blog/street-style-trends"
+      ],
+      "coverageGaps": [],
+      "description": "Article detail page with article header (image, title, byline, tag) and long-form default-content body of headings, paragraphs, lists, quotes, and inline images",
+      "blocks": [
+        {
+          "name": "columns-article",
+          "instances": [
+            "#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout"
+          ]
+        }
+      ],
+      "sections": []
+    },
+    {
+      "name": "faq-support",
+      "urls": [
+        "https://wknd-trendsetters.site/faq"
+      ],
+      "coverageGaps": [],
+      "description": "Support page with intro hero, FAQ accordion, contact-info columns, and a CTA banner",
+      "blocks": [
+        {
+          "name": "hero-intro",
+          "instances": [
+            "#main-content > header.section.secondary-section"
+          ]
+        },
+        {
+          "name": "accordion-faq",
+          "instances": [
+            "#main-content > section.section:nth-of-type(1) > div.container > div.faq-list"
+          ]
+        },
+        {
+          "name": "columns-article",
+          "instances": [
+            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout"
+          ]
         }
       ],
       "sections": [
@@ -51,25 +218,84 @@
         },
         {
           "id": "section-3",
-          "name": "Image gallery",
+          "name": "Lets connect",
           "selector": "#main-content > section.section.secondary-section:nth-of-type(2)",
           "style": "light",
-          "blocks": ["cards-gallery"],
-          "defaultContent": [
-            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.utility-text-align-center.utility-margin-bottom-8rem > h2.h2-heading",
-            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.utility-text-align-center.utility-margin-bottom-8rem > p.paragraph-lg"
+          "blocks": ["columns-article"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-4",
+          "name": "CTA banner",
+          "selector": "#main-content > section.section.accent-section",
+          "style": "accent",
+          "blocks": [],
+          "defaultContent": ["#main-content > section.section.accent-section > div.container"]
+        }
+      ]
+    },
+    {
+      "name": "trend-landing",
+      "urls": [
+        "https://wknd-trendsetters.site/fashion-trends-young-adults-casual-sport"
+      ],
+      "coverageGaps": [],
+      "description": "Landing page with two-image hero, a card grid of trend items, a feature columns section, and a CTA banner",
+      "blocks": [
+        {
+          "name": "hero-intro",
+          "instances": [
+            "#main-content > header.section.secondary-section"
           ]
         },
         {
-          "id": "section-5",
-          "name": "Latest articles",
-          "selector": "#main-content > section.section.secondary-section:nth-of-type(4)",
+          "name": "cards-article",
+          "instances": [
+            "#trends > div.container > div.grid-layout.desktop-4-column"
+          ]
+        },
+        {
+          "name": "columns-article",
+          "instances": [
+            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Hero intro",
+          "selector": "#main-content > header.section.secondary-section",
           "style": "light",
+          "blocks": ["hero-intro"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-2",
+          "name": "Trend alert",
+          "selector": "#trends",
+          "style": null,
           "blocks": ["cards-article"],
           "defaultContent": [
-            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.utility-text-align-center > h2.h2-heading",
-            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.utility-text-align-center > p.paragraph-lg"
+            "#trends > div.container > div.utility-text-align-center > h2.h2-heading",
+            "#trends > div.container > div.utility-text-align-center > p.paragraph-lg"
           ]
+        },
+        {
+          "id": "section-3",
+          "name": "Feature",
+          "selector": "#main-content > section.section.secondary-section:nth-of-type(2)",
+          "style": "light",
+          "blocks": ["columns-article"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-4",
+          "name": "CTA banner",
+          "selector": "#main-content > section.section.accent-section",
+          "style": "accent",
+          "blocks": [],
+          "defaultContent": ["#main-content > section.section.accent-section > div.container"]
         }
       ]
     }
