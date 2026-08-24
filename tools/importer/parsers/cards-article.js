@@ -19,17 +19,23 @@
  */
 export default function parse(element, { document }) {
   // Each card is a top-level anchor/article in the grid.
-  const cards = element.querySelectorAll(':scope > a.article-card, :scope > .article-card');
+  // Handles both the "article-card" listing cards and the "trend-card" grid
+  // cards (same shape: image cell + body with tag/heading/optional description).
+  // Match cards as descendants, not just direct children: the importer's lenient
+  // HTML parser can reparent consecutive block-wrapping <a> cards, so a direct
+  // child scan misses all but the first. querySelectorAll finds every card
+  // regardless of how the anchors were nested during parsing.
+  const cards = element.querySelectorAll('a.article-card, .article-card, a.trend-card, .trend-card');
 
   const cells = [];
   cards.forEach((card) => {
     // Image cell: the card image (mandatory in library).
-    const img = card.querySelector('.article-card-image img, img');
+    const img = card.querySelector('.article-card-image img, .trend-card-image img, img');
 
     // Text cell: preserve the meta + heading. The whole source card is a link,
     // so wrap the heading in an anchor to keep it clickable without duplicating text.
     const textCell = [];
-    const body = card.querySelector('.article-card-body');
+    const body = card.querySelector('.article-card-body, .trend-card-body');
     const heading = card.querySelector('h1, h2, h3, h4, h5, h6');
     const href = card.getAttribute('href');
 
